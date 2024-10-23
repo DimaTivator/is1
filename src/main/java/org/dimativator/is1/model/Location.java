@@ -8,7 +8,7 @@ import lombok.*;
 @Builder
 @Data
 @Entity
-@Table(name = "locations")
+@Table(name = "is1_locations")
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

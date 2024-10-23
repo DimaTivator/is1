@@ -6,25 +6,24 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 @Entity
-@Table(name = "is1_coordinates")
-public class Coordinates {
+@Table(name = "is1_user")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Max(128)
-    @Column(name = "x")
-    private Long x;
+    @Column(nullable = false, unique = true)
+    private String login;
 
-    @Min(-436)
-    @Column(name = "y")
-    private Double y;
+    @Column(nullable = false, unique = true)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 }

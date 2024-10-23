@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: is1
+  datasource:
+    url: jdbc:postgresql://localhost:5432/studs
+    username: s367054
+    password: yLm1ilcVMgppkgJw
+  sql:
+    init:
+      mode: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
