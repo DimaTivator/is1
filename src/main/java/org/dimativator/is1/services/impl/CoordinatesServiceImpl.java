@@ -25,4 +25,9 @@ public class CoordinatesServiceImpl implements CoordinatesService {
                 .map(CoordinatesMapper::toDto)
                 .toList();
     }
+
+    @Override
+    public void saveCoordinates(CoordinatesDto coordinatesDto) {
+        coordinatesRepository.save(CoordinatesMapper.toEntity(coordinatesDto));
+    }
 }

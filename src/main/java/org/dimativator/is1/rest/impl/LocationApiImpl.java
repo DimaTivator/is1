@@ -22,4 +22,10 @@ public class LocationApiImpl implements LocationApi {
     public ResponseEntity<List<LocationDto>> getAllLocations() {
         return ResponseEntity.ok(locationService.getAllLocations());
     }
+
+    @Override
+    public ResponseEntity<Void> saveLocation(LocationDto locationDto) {
+        locationService.saveLocation(locationDto);
+        return ResponseEntity.ok().build();
+    }
 }

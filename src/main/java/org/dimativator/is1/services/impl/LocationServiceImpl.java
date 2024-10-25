@@ -25,4 +25,9 @@ public class LocationServiceImpl implements LocationService {
                 .map(LocationMapper::toDto)
                 .toList();
     }
+
+    @Override
+    public void saveLocation(LocationDto locationDto) {
+        locationRepository.save(LocationMapper.toEntity(locationDto));
+    }
 }

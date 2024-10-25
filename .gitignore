@@ -21,3 +21,26 @@ target/
 
 ./src/main/resources/application.yaml
 ./src/main/resources/application.properties
+
+
+# dependencies
+is1_frontend/node_modules
+is1_frontend/.pnp
+is1_frontend/.pnp.js
+
+# testing
+is1_frontend/coverage
+
+# production
+is1_frontend/build
+
+# misc
+is1_frontend/.DS_Store
+is1_frontend/.env.local
+is1_frontend/.env.development.local
+is1_frontend/.env.test.local
+is1_frontend/.env.production.local
+
+is1_frontend/npm-debug.log*
+is1_frontend/yarn-debug.log*
+is1_frontend/yarn-error.log*

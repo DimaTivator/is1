@@ -1,6 +1,8 @@
 package org.dimativator.is1.model;
 
-public enum Country {
+import org.springframework.data.repository.query.Param;
+
+public enum Country implements Comparable<Country> {
     RUSSIA,
     GERMANY,
     FRANCE,

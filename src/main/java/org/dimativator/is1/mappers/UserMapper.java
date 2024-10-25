@@ -6,6 +6,13 @@ import org.dimativator.is1.dto.UserDto;
 import org.dimativator.is1.model.User;
 
 public class UserMapper {
+    public static User toEntity(UserDto userDto) {
+        return User.builder()
+                .id(userDto.getId())
+                .login(userDto.getLogin())
+                .build();
+    }
+
     public static User toEntity(SignUpDto signUpDto) {
         return User.builder()
                 .login(signUpDto.getLogin())

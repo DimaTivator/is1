@@ -22,4 +22,10 @@ public class CoordinatesApiImpl implements CoordinatesApi {
     public ResponseEntity<List<CoordinatesDto>> getAllCoordinates() {
         return ResponseEntity.ok(coordinatesService.getAllCoordinates());
     }
+
+    @Override
+    public ResponseEntity<Void> saveCoordinates(CoordinatesDto coordinatesDto) {
+        coordinatesService.saveCoordinates(coordinatesDto);
+        return ResponseEntity.ok().build();
+    }
 }

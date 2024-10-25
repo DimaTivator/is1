@@ -15,6 +15,8 @@ public class PersonMapper {
                 .location(LocationMapper.toEntity(personDto.getLocation()))
                 .height(personDto.getHeight())
                 .birthday(personDto.getBirthday())
+                .nationality(personDto.getNationality())
+                .user(UserMapper.toEntity(personDto.getUser()))
                 .build();
     }
 
@@ -29,6 +31,8 @@ public class PersonMapper {
                 .location(LocationMapper.toDto(person.getLocation()))
                 .height(person.getHeight())
                 .birthday(person.getBirthday())
+                .nationality(person.getNationality())
+                .user(UserMapper.toDto(person.getUser()))
                 .build();
     }
 }
