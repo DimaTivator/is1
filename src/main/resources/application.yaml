@@ -7,7 +7,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/studs
     username: s367054
-    password: yLm1ilcVMgppkgJw
+    password: 123
   sql:
     init:
       mode: always
