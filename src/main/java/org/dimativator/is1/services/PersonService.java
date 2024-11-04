@@ -13,5 +13,6 @@ public interface PersonService {
     List<PersonDto> getPersonsWithNationalityLessThan(Country country);
     List<PersonDto> getPersonsWithNationalityGreaterThan(Country country);
     void deletePersonsByHeight(float height);
+    void deletePersonById(Long id);
     void savePerson(PersonDto personDto);
 }

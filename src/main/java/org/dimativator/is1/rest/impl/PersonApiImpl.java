@@ -53,8 +53,13 @@ public class PersonApiImpl implements PersonApi {
 
     @Override
     public ResponseEntity<Void> deletePersonsByHeight(float height) {
-        System.out.println("SDKFLMSDLKFMLKSDMFKLSDMFKLDSMFLKDSMFKLSD " + height);
         personService.deletePersonsByHeight(height);
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    public ResponseEntity<Void> deletePersonById(Long id) {
+        personService.deletePersonById(id);
         return ResponseEntity.ok().build();
     }
 }

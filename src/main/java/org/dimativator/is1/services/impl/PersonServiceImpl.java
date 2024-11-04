@@ -69,4 +69,9 @@ public class PersonServiceImpl implements PersonService {
     public void deletePersonsByHeight(float height) {
         personRepository.deleteByHeight(height);
     }
+
+    @Override
+    public void deletePersonById(Long id) {
+        personRepository.deleteById(id);
+    }
 }

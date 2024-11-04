@@ -3,6 +3,7 @@ package org.dimativator.is1.rest;
 import org.dimativator.is1.dto.PersonDto;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,6 +29,9 @@ public interface PersonApi {
     @GetMapping(value = "/persons/nationality-greater", consumes = MediaType.APPLICATION_JSON_VALUE + "; charset=utf-8")
     ResponseEntity<List<PersonDto>> getPersonsWithNationalityGreaterThan(@RequestParam String country);
 
-    @PostMapping(value = "/persons/delete/height", consumes = MediaType.APPLICATION_JSON_VALUE + "; charset=utf-8")
+    @DeleteMapping(value = "/persons/height", consumes = MediaType.APPLICATION_JSON_VALUE + "; charset=utf-8")
     ResponseEntity<Void> deletePersonsByHeight(@RequestParam float height);
+
+    @DeleteMapping(value = "/persons/id", consumes = MediaType.APPLICATION_JSON_VALUE + "; charset=utf-8")
+    ResponseEntity<Void> deletePersonById(@RequestParam Long id);
 }
