@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean requestAdminRights(String token) {
         final User user = getUserByToken(token.split(" ")[1]);
-        if (userRepository.existsByRole(Role.ADMIN)) {
+        if (userRepository.existsByRole(Role.ADMIN) && user.getRole() != Role.ADMIN) {
             user.setRole(Role.POTENTIAL_ADMIN);
             userRepository.save(user);
             return false;

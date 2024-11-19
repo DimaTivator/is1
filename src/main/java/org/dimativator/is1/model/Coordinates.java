@@ -14,7 +14,9 @@ import javax.validation.constraints.Min;
 @Builder
 @Data
 @Entity
-@Table(name = "is1_coordinates")
+@Table(name = "is1_coordinates", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"x", "y"})
+})
 public class Coordinates {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

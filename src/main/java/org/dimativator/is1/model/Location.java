@@ -8,7 +8,9 @@ import lombok.*;
 @Builder
 @Data
 @Entity
-@Table(name = "is1_locations")
+@Table(name = "is1_locations", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"x", "y", "z"})
+})
 public class Location {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

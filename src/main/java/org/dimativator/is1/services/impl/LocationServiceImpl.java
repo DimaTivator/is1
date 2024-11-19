@@ -2,12 +2,14 @@ package org.dimativator.is1.services.impl;
 
 import org.dimativator.is1.dto.LocationDto;
 import org.dimativator.is1.mappers.LocationMapper;
+import org.dimativator.is1.model.Location;
 import org.dimativator.is1.repository.LocationRepository;
 import org.dimativator.is1.services.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class LocationServiceImpl implements LocationService {
@@ -29,5 +31,10 @@ public class LocationServiceImpl implements LocationService {
     @Override
     public void saveLocation(LocationDto locationDto) {
         locationRepository.save(LocationMapper.toEntity(locationDto));
+    }
+
+    @Override
+    public Optional<Location> getLocationByXAndYAndZ(Long x, Float y, Float z) {
+        return locationRepository.findByXAndYAndZ(x, y, z);
     }
 }

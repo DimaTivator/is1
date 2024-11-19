@@ -23,4 +23,5 @@ public class PersonDto {
     private java.time.ZonedDateTime birthday;
     private Country nationality;
     private UserDto user;
+    private int totalPages;
 }

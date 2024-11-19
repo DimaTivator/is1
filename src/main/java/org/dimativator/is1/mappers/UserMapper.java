@@ -7,6 +7,9 @@ import org.dimativator.is1.model.User;
 
 public class UserMapper {
     public static User toEntity(UserDto userDto) {
+        if (userDto == null) {
+            return null;
+        }
         return User.builder()
                 .id(userDto.getId())
                 .login(userDto.getLogin())
