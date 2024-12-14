@@ -5,6 +5,7 @@ import org.dimativator.is1.mappers.UserMapper;
 import org.dimativator.is1.model.*;
 import org.dimativator.is1.repository.PersonFilter;
 import org.dimativator.is1.rest.PersonApi;
+import org.dimativator.is1.service.ParquetImportService;
 import org.dimativator.is1.services.CoordinatesService;
 import org.dimativator.is1.services.LocationService;
 import org.dimativator.is1.services.PersonService;
@@ -15,7 +16,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.Instant;
@@ -30,16 +34,19 @@ public class PersonApiImpl implements PersonApi {
     private final CoordinatesService coordinatesService;
     private final LocationService locationService;
     private final UserService userService;
+    private final ParquetImportService parquetImportService;
 
     @Autowired
     public PersonApiImpl(PersonService personService,
                          CoordinatesService coordinatesService,
                          LocationService locationService,
-                         UserService userService) {
+                         UserService userService,
+                         ParquetImportService parquetImportService) {
         this.personService = personService;
         this.coordinatesService = coordinatesService;
         this.locationService = locationService;
         this.userService = userService;
+        this.parquetImportService = parquetImportService;
     }
 
     @Override
@@ -83,6 +90,9 @@ public class PersonApiImpl implements PersonApi {
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(personService.createPerson(personDto, user));
         } catch (ResponseStatusException e) {
+            if (e.getReason() == "Person with this combination of Name, Birthday and Nationality already exists") {
+                return ResponseEntity.status(410).body(null);    
+            }
             return ResponseEntity.status(e.getStatusCode()).body(null);
         } catch (DataIntegrityViolationException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -137,6 +147,19 @@ public class PersonApiImpl implements PersonApi {
         personService.checkUser(id, user);
         personService.deletePersonById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Override
+    public ResponseEntity<String> importParquet(@RequestParam("file") MultipartFile file, 
+                                              @RequestHeader(name = "Authorization") String token) {
+        try {
+            User user = userService.getUserByToken(getToken(token));
+            parquetImportService.importPeopleFromParquet(file, user);
+            return ResponseEntity.ok("Import successful");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("Import failed: " + e.getMessage());
+        }
     }
 
     private String getToken(String bearerToken) {

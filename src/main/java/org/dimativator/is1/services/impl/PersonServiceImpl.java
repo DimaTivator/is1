@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Service
@@ -78,6 +79,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional
     public PersonDto createPerson(PersonDto personDto, User user) {
+        checkUniqueCombination(personDto);
         final Person person = PersonMapper.toEntity(personDto);
         person.setUser(user);
         try {
@@ -95,7 +97,9 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    @Transactional
     public PersonDto updatePerson(PersonDto personDto) {
+        checkUniqueCombination(personDto);
         final Person person = PersonMapper.toEntity(personDto);
         try {
             setLocation(person);
@@ -167,5 +171,18 @@ public class PersonServiceImpl implements PersonService {
             return;
         }
         throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not owner of this object");
+    }
+
+    private void checkUniqueCombination(PersonDto personDto) {
+        List<Person> persons  = personRepository.findByNameAndBirthdayAndNationality(
+            personDto.getName(), personDto.getBirthday(), personDto.getNationality()
+        );
+
+        if (persons.size() > 1 && personDto.getId() != null || persons.size() > 0 && personDto.getId() == null) {
+            throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST, 
+                "Person with this combination of Name, Birthday and Nationality already exists"
+            );
+        }
     }
 }

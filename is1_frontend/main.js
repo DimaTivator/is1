@@ -22,6 +22,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         window.open('admin_panel.html', 'Admin Panel', 'width=400,height=600');
     });
 
+    document.getElementById('show-imports').addEventListener('click', async () => {
+        document.getElementById('importHistoryDialog').showModal();
+    });
+    
+    document.getElementById('closeImportHistoryDialog').addEventListener('click', () => {
+        document.getElementById('importHistoryDialog').close();
+    });
+
     document.getElementById('count-nationality-btn').addEventListener('click', countWithNationalityEqualTo);
     document.getElementById('count-with-nationality-less-btn').addEventListener('click', countWithNationalityLessThan);
     document.getElementById('count-eye-color-btn').addEventListener('click', countWithEyeColorEqualTo);
@@ -50,12 +58,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     await filterTable();
 });
 
-setInterval(
-    async () => {
-        await loadPersons();
-    },
-    2000
-)
+// setInterval(
+//     async () => {
+//         await loadPersons();
+//     },
+//     2000
+// )
 
 let persons = [];
 let page = 0;
@@ -167,6 +175,11 @@ async function filterTable() {
     }
     console.log(filters);
     await loadPersons();
+}
+
+
+function showImports() {
+    
 }
 
 

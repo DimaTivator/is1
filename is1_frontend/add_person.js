@@ -3,9 +3,29 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadLocations();
 });
 
+const uploadedFile = null;
+
+document.getElementById('parquet-upload').addEventListener('change', (event) => {
+    uploadedFile = event.target.files[0];
+    if (uploadedFile && !uploadedFile.name.endsWith('.parquet')) {
+        alert('Please select a valid .parquet file');
+        uploadedFile = null;
+    }
+});
+
 document.getElementById('add-person-form').addEventListener('submit', async (event) => {
     event.preventDefault();
     console.log("Add person form submitted");
+
+    if (uploadedFile) {
+        try {
+            await uploadParquetFile(uploadedFile);
+            showNotification('File uploaded successfully');
+        } catch (error) {
+            showNotification('Failed to upload file: ' + error.message);
+        }
+        return;
+    }
 
     const name = document.getElementById('name').value;
     if (!name) {
@@ -73,13 +93,13 @@ document.getElementById('add-person-form').addEventListener('submit', async (eve
     await loadLocations();
 });
 
-setInterval(
-    async () => {
-        await loadCoordinates();
-        await loadLocations();
-    },
-    1000
-)
+// setInterval(
+//     async () => {
+//         await loadCoordinates();
+//         await loadLocations();
+//     },
+//     2000
+// )
 
 async function loadCoordinates() {
     try {
@@ -130,4 +150,21 @@ function showNotification(message) {
     setTimeout(() => {
         notification.classList.remove('show');
     }, 3000);
+}
+
+// Add this function to handle file selection and upload
+function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (file && file.name.endsWith('.parquet')) {
+        uploadParquetFile(file)
+            .then(response => {
+                showNotification('File uploaded successfully');
+                // Refresh your person list or perform other necessary updates
+            })
+            .catch(error => {
+                showNotification('Failed to upload file: ' + error.message);
+            });
+    } else {
+        showNotification('Please select a valid .parquet file');
+    }
 }

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Import History</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <div id="imports-container">
+        <h2>Import History</h2>
+        <table id="imports-table">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Filename</th>
+                    <th>Row Count</th>
+                    <th>Status</th>
+                    <th>Import Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Import history rows will be added here -->
+            </tbody>
+        </table>
+    </div>
+
+    <div id="notification" class="notification"></div>
+    <script src="api.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            /*
+            setInterval(
+                async () => {
+                    await loadHistory();    
+                },
+                2000
+            )
+                */
+            loadHistory();
+        });
+
+        async function loadHistory() {
+            try {
+                const history = await getImportHistory();
+                const tbody = document.getElementById('imports-table').querySelector('tbody');
+                tbody.innerHTML = '';
+
+                history.forEach(record => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${record.username}</td>
+                        <td>${record.filename}</td>
+                        <td>${record.rowCount}</td>
+                        <td>${record.success ? 'Success' : 'Failed'}</td>
+                        <td>${new Date(record.importDate).toLocaleString()}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } catch (error) {
+                showNotification('Failed to load import history');
+            }
+        }
+
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.classList.add('show');
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html> 

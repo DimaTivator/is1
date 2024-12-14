@@ -1,5 +1,5 @@
-const API_URL = 'http://localhost:43476';
-// const API_URL = 'http://localhost:8080';
+// const API_URL = 'http://localhost:43476';
+const API_URL = 'http://localhost:8080';
 
 async function apiGetPersons(page, filters){
     const token = localStorage.getItem('token');
@@ -106,6 +106,9 @@ async function apiCreatePerson(personData) {
         }
         if (response.status === 400) {
             throw new Error('Coordinates or location already exist');
+        }
+        if (response.status == 410) {
+            throw new Error('Combination of Name, Birthday and Nationality is not unique')
         }
         if (response.status === 404) {
             throw new Error('ID not found');
@@ -311,5 +314,50 @@ async function apiDenyAdminRequest(id) {
         return response;
     } catch (error) {
         console.error('Error denying admin request');
+    }
+}
+
+async function uploadParquetFile(file) {
+    const token = localStorage.getItem('token');
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    try {
+        const response = await fetch(`${API_URL}/persons/import-parquet`, {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            body: formData
+        });
+        
+        if (!response.ok) {
+            throw new Error('Upload failed');
+        }
+        
+        return await response.text();
+    } catch (error) {
+        console.error('Error uploading file:', error);
+        throw error;
+    }
+}
+
+async function getImportHistory() {
+    const token = localStorage.getItem('token');
+    try {
+        const response = await fetch(`${API_URL}/import-history`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            throw new Error('Failed to fetch import history');
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error getting import history:', error);
+        throw error;
     }
 }

@@ -1,13 +1,10 @@
 package org.dimativator.is1.rest;
 
 import org.dimativator.is1.dto.PersonDto;
-import org.dimativator.is1.model.Color;
-import org.dimativator.is1.model.Coordinates;
-import org.dimativator.is1.model.Country;
-import org.dimativator.is1.model.Location;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.Min;
 import java.util.List;
@@ -54,4 +51,8 @@ public interface PersonApi {
 
     @DeleteMapping(value = "/persons/id", consumes = MediaType.APPLICATION_JSON_VALUE + "; charset=utf-8")
     ResponseEntity<Void> deletePersonById(@RequestParam Long id, @RequestHeader(name = "Authorization") String token);
+
+    @PostMapping("/persons/import-parquet")
+    ResponseEntity<String> importParquet(@RequestParam("file") MultipartFile file, 
+                                        @RequestHeader(name = "Authorization") String token);
 }
