@@ -19,12 +19,17 @@ public class MinioService {
     
     private final MinioClient minioClient;
 
-    public String uploadFile(MultipartFile file) throws Exception {
+    public String prepareUpload(MultipartFile file) throws Exception {
         String filename = UUID.randomUUID() + "_" + file.getOriginalFilename();
+        String tempBucketName = bucketName + "-temp";
+        
+        if (!minioClient.bucketExists(BucketExistsArgs.builder().bucket(tempBucketName).build())) {
+            minioClient.makeBucket(MakeBucketArgs.builder().bucket(tempBucketName).build());
+        }
         
         minioClient.putObject(
             PutObjectArgs.builder()
-                .bucket(bucketName)
+                .bucket(tempBucketName)
                 .object(filename)
                 .stream(file.getInputStream(), file.getSize(), -1)
                 .contentType(file.getContentType())
@@ -32,6 +37,36 @@ public class MinioService {
         );
         
         return filename;
+    }
+
+    public void commitUpload(String filename) throws Exception {
+        String tempBucketName = bucketName + "-temp";
+        
+        minioClient.copyObject(
+            CopyObjectArgs.builder()
+                .source(CopySource.builder().bucket(tempBucketName).object(filename).build())
+                .bucket(bucketName)
+                .object(filename)
+                .build()
+        );
+        
+        minioClient.removeObject(
+            RemoveObjectArgs.builder()
+                .bucket(tempBucketName)
+                .object(filename)
+                .build()
+        );
+    }
+
+    public void rollbackUpload(String filename) throws Exception {
+        String tempBucketName = bucketName + "-temp";
+        
+        minioClient.removeObject(
+            RemoveObjectArgs.builder()
+                .bucket(tempBucketName)
+                .object(filename)
+                .build()
+        );
     }
 
     public InputStream downloadFile(String filename) throws Exception {

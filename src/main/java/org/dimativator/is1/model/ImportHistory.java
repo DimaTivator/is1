@@ -22,7 +22,7 @@ public class ImportHistory {
     @Column(nullable = false)
     private String filename;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "varchar(255) default ''")
     private String minioFilename;
 
     @Column(nullable = false)

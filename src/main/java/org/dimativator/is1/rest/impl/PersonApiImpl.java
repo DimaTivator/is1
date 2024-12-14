@@ -158,10 +158,8 @@ public class PersonApiImpl implements PersonApi {
             return ResponseEntity.ok("Import successful");
 
         } catch (ResponseStatusException e) {
-            System.out.println("------------------------------------------------------------------------------");
-            System.out.println(e.getReason());
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-            .body("Import failed: " + e.getReason());
+             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+             .body("Import failed: " + e.getReason());
 
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
