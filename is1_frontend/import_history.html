@@ -16,6 +16,7 @@
                     <th>Row Count</th>
                     <th>Status</th>
                     <th>Import Date</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -53,6 +54,9 @@
                         <td>${record.rowCount}</td>
                         <td>${record.success ? 'Success' : 'Failed'}</td>
                         <td>${new Date(record.importDate).toLocaleString()}</td>
+                        <td>
+                            <button onclick="downloadFile(${record.id}, '${record.filename}')">Download</button>
+                        </td>
                     `;
                     tbody.appendChild(row);
                 });
@@ -68,6 +72,29 @@
             setTimeout(() => {
                 notification.classList.remove('show');
             }, 3000);
+        }
+
+        async function downloadFile(id, filename) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`${API_URL}/import-history/download/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) throw new Error('Download failed');
+                
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                a.click();
+                window.URL.revokeObjectURL(url);
+            } catch (error) {
+                showNotification('Failed to download file: ' + error.message);
+            }
         }
     </script>
 </body>

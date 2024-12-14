@@ -23,6 +23,9 @@ public class ImportHistory {
     private String filename;
 
     @Column(nullable = false)
+    private String minioFilename;
+
+    @Column(nullable = false)
     private Integer rowCount;
 
     @Column(nullable = false)

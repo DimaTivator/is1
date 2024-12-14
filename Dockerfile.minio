@@ -1,0 +1,15 @@
+FROM minio/minio:latest
+
+# Set MinIO root credentials
+ENV MINIO_ROOT_USER=minioadmin
+ENV MINIO_ROOT_PASSWORD=minioadmin
+
+# Expose MinIO ports
+EXPOSE 9000
+EXPOSE 9001
+
+# Create a directory for MinIO data
+VOLUME ["/data"]
+
+# Start MinIO server
+CMD ["server", "/data", "--console-address", ":9001"] 

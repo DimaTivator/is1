@@ -28,4 +28,6 @@ public interface PersonService {
     PersonDto updatePerson(PersonDto personDto);
 
     void checkUser(long id, User user);
+
+    void checkUniqueCombination(PersonDto personDto);
 }

@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadLocations();
 });
 
-const uploadedFile = null;
+let uploadedFile = null;
 
 document.getElementById('parquet-upload').addEventListener('change', (event) => {
     uploadedFile = event.target.files[0];
@@ -11,6 +11,7 @@ document.getElementById('parquet-upload').addEventListener('change', (event) => 
         alert('Please select a valid .parquet file');
         uploadedFile = null;
     }
+    console.log("UPLOADED FILE: " + uploadedFile.name);
 });
 
 document.getElementById('add-person-form').addEventListener('submit', async (event) => {

@@ -20,10 +20,11 @@ public class ImportHistoryService {
     private final ImportHistoryRepository importHistoryRepository;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void recordImport(String username, String filename, int rowCount, boolean success) {
+    public void recordImport(String username, String filename, String minioFilename, int rowCount, boolean success) {
         ImportHistory history = new ImportHistory();
         history.setUsername(username);
         history.setFilename(filename);
+        history.setMinioFilename(minioFilename);
         history.setRowCount(rowCount);
         history.setSuccess(success);
         history.setImportDate(ZonedDateTime.now());
@@ -41,6 +42,10 @@ public class ImportHistoryService {
             .stream()
             .map(this::toDto)
             .collect(Collectors.toList());
+    }
+
+    public ImportHistory getById(Long id) {
+        return importHistoryRepository.findById(id).orElseThrow();
     }
 
     public List<ImportHistoryDto> getAllHistory() {

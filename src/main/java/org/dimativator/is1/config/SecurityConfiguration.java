@@ -57,7 +57,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/login").permitAll()
                         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()
-//                                .anyRequest().permitAll()
+                            //    .anyRequest().permitAll()
                 );
 
         return http.build();

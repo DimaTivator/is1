@@ -4,13 +4,14 @@ import lombok.RequiredArgsConstructor;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.parquet.hadoop.ParquetReader;
 import org.dimativator.is1.model.Person;
+import org.dimativator.is1.mappers.PersonMapper;
 import org.dimativator.is1.model.Coordinates;
 import org.dimativator.is1.model.Location;
 import org.dimativator.is1.model.User;
 import org.dimativator.is1.repository.PersonRepository;
+import org.dimativator.is1.services.PersonService;
 import org.dimativator.is1.repository.CoordinatesRepository;
 import org.dimativator.is1.repository.LocationRepository;
-import org.dimativator.is1.services.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,17 +23,24 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ParquetImportService {
+
+    private final PersonService personService;
     
     private final PersonRepository personRepository;
     private final CoordinatesRepository coordinatesRepository;
     private final LocationRepository locationRepository;
     private final ImportHistoryService importHistoryService;
+    private final MinioService minioService;
 
     @Transactional
     public void importPeopleFromParquet(MultipartFile file, User user) throws Exception {
         boolean success = true;
         int rowCount = 0;
+        String minioFilename = "";
+
         try {
+            minioFilename = minioService.uploadFile(file);
+
             // Create temporary file
             File tempFile = File.createTempFile("upload", ".parquet");
             file.transferTo(tempFile);
@@ -64,6 +72,8 @@ public class ParquetImportService {
                     
                     // Set the user for this person
                     person.setUser(user);
+
+                    personService.checkUniqueCombination(PersonMapper.toDto(person));
                     
                     people.add(person);
                 }
@@ -78,6 +88,7 @@ public class ParquetImportService {
             importHistoryService.recordImport(
                 user.getLogin(),
                 file.getOriginalFilename(),
+                minioFilename,
                 success ? rowCount : 0,
                 success
             );
