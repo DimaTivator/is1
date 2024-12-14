@@ -1,0 +1,150 @@
+#main-container {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+#table-container, .request-container, #button-container {
+    flex: 1;
+}
+
+#person-table thead input {
+    width: 60px;
+    font-size: 10px;
+}
+
+#button-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 10%;
+    gap: 5px;
+}
+
+#person-table {
+    max-width: 70%;
+    border-collapse: collapse;
+    margin: 5px 0;
+    font-size: 12px;
+    text-align: left;
+}
+
+.request-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    /*max-width: 20%;*/
+}
+
+.request-container input[type="number"],
+.request-container select {
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+#arrows-container {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+#person-table th, #person-table td {
+    padding: 8px 8px;
+    border: 1px solid #ddd;
+}
+
+#person-table th {
+    background-color: #f2f2f2;
+}
+
+#person-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#person-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Button styles */
+button {
+    padding: 10px 10px;
+    margin: 5px 0;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#logout-btn {
+    float: right;
+    background-color: #f44336;
+}
+
+#logout-btn:hover {
+    background-color: #e53935;
+}
+
+.sort-button {
+    display: block;
+    margin: 0 auto;
+    color: black;
+    background-color: #f2f2f2;
+}
+
+.sort-button:hover {
+    background-color: #fff;
+}
+
+#add-person,
+#request-admin-btn,
+#prev-page,
+#next-page,
+#filter-button {
+    background-color: #008CBA;
+}
+
+#admin-panel-btn {
+    background-color: deeppink;
+}
+
+#add-person:hover,
+#request-admin-btn:hover,
+#prev-page:hover,
+#next-page:hover,
+#filter-button:hover {
+    background-color: #007bb5;
+}
+
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.notification.show {
+    opacity: 1;
+}
+
+dialog {
+    width: 50%;
+    height: 85%;
+    padding: 20px;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+}

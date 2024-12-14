@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Person</title>
+    <link rel="stylesheet" href="css/add_person.css">
+</head>
+<body>
+<div id="add-person-container">
+    <h2>Add New Person</h2>
+    <form id="add-person-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name">
+
+        <label>Coordinates (X, Y):</label>
+        <div style="display: flex; gap: 10px; flex-direction: row;">
+            <input type="number" id="coordinateID" name="coordinateID" placeholder="ID" style="width: 33%;">
+            <input type="number" id="coordinateX" name="coordinateX" placeholder="X" style="width: 33%;">
+            <input type="number" id="coordinateY" name="coordinateY" placeholder="Y" style="width: 33%;">
+        </div>
+
+        <label for="eyeColor">Eye Color:</label>
+        <select id="eyeColor" name="eyeColor">
+            <option value="BLACK">Black</option>
+            <option value="BLUE">Blue</option>
+            <option value="ORANGE">Orange</option>
+        </select>
+
+        <label for="hairColor">Hair Color:</label>
+        <select id="hairColor" name="hairColor">
+            <option value="BLACK">Black</option>
+            <option value="BLUE">Blue</option>
+            <option value="ORANGE">Orange</option>
+        </select>
+
+        <label>Location (X, Y, Z):</label>
+        <div style="display: flex; gap: 10px; flex-direction: row;">
+            <input type="number" id="locationID" name="locationID" placeholder="ID" style="width: 25%;">
+            <input type="number" id="locationX" name="locationX" placeholder="X" style="width: 25%;">
+            <input type="number" id="locationY" name="locationY" placeholder="Y" style="width: 25%;">
+            <input type="number" id="locationZ" name="locationZ" placeholder="Z" style="width: 25%;">
+        </div>
+
+        <label for="height">Height:</label>
+        <input type="number" id="height" name="height" min="0">
+
+        <label for="birthday">Birthday:</label>
+        <input type="date" id="birthday" name="birthday">
+
+        <label for="nationality">Nationality:</label>
+        <select id="nationality" name="nationality">
+            <option value="RUSSIA">Russia</option>
+            <option value="GERMANY">Germany</option>
+            <option value="FRANCE">France</option>
+            <option value="ITALY">Italy</option>
+        </select>
+
+        <button type="submit">Add Person</button>
+    </form>
+</div>
+
+<div id="tables-container">
+    <h2>Coordinates</h2>
+    <table id="coordinates-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>X</th>
+            <th>Y</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Coordinates rows here -->
+        </tbody>
+    </table>
+
+    <h2>Locations</h2>
+    <table id="locations-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>X</th>
+            <th>Y</th>
+            <th>Z</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Locations rows here -->
+        </tbody>
+    </table>
+</div>
+
+<div id="notification" class="notification"></div>
+<script src="api.js"></script>
+<script src="add_person.js"></script>
+</body>
+</html>

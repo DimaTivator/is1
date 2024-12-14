@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Person List</title>
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+<div id="main-container">
+    <div id="table-container">
+        <table id="person-table">
+            <thead>
+            <tr>
+                <th><button class="sort-button" id="sort-id" value="id"><</button></th>
+                <th><button class="sort-button" id="sort-name" value="name"><</button></th>
+                <th><button class="sort-button" id="sort-coordinates" value="coordinates"><</button></th>
+                <th><button class="sort-button" id="sort-creation-date" value="creationDate"><</button></th>
+                <th><button class="sort-button" id="sort-eye-color" value="eyeColor"><</button></th>
+                <th><button class="sort-button" id="sort-hair-color" value="hairColor"><</button></th>
+                <th><button class="sort-button"  id="sort-location" value="location"><</button></th>
+                <th><button class="sort-button" id="sort-height" value="height"><</button></th>
+                <th><button class="sort-button" id="sort-birthday" value="birthday"><</button></th>
+                <th><button class="sort-button" id="sort-nationality" value="nationality"><</button></th>
+                <th><button class="sort-button" id="sort-user" value="user"><</button></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Coordinates</th>
+                <th>Creation date</th>
+                <th>Eye color</th>
+                <th>Hair color</th>
+                <th>Location</th>
+                <th>Height</th>
+                <th>Birthday</th>
+                <th>Nationality</th>
+                <th>User</th>
+                <th></th>
+                <th></th>
+            <tr>
+                <th><input type="text" id="filter-id"></th>
+                <th><input type="text" id="filter-name"></th>
+                <th><input type="text" id="filter-coordinates"></th>
+                <th><input type="text" id="filter-creation-date"></th>
+                <th><input type="text" id="filter-eye-color"></th>
+                <th><input type="text" id="filter-hair-color"></th>
+                <th><input type="text" id="filter-location"></th>
+                <th><input type="text" id="filter-height"></th>
+                <th><input type="text" id="filter-birthday"></th>
+                <th><input type="text" id="filter-nationality"></th>
+                <th><input type="text" id="filter-user"></th>
+                <th><button id="filter-button">Filter</button></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <!-- Rows will be populated here -->
+            </tbody>
+        </table>
+    </div>
+    <div id="requests-list-container">
+        <div class="request-container">
+            <button id="remove-by-height-btn">Remove by height</button>
+            <input type="number" id="height-input" placeholder="Height">
+        </div>
+        <div class="request-container">
+            <button id="count-nationality-btn">Count by nationality</button>
+            <select id="nationality-eq" name="nationality-eq" required>
+                <option value="RUSSIA">Russia</option>
+                <option value="GERMANY">Germany</option>
+                <option value="FRANCE">France</option>
+                <option value="ITALY">Italy</option>
+            </select>
+        </div>
+        <div class="request-container">
+            <button id="count-with-nationality-less-btn">Count with nationality less than</button>
+            <select id="nationality-less" name="nationality-less" required>
+                <option value="RUSSIA">Russia</option>
+                <option value="GERMANY">Germany</option>
+                <option value="FRANCE">France</option>
+                <option value="ITALY">Italy</option>
+            </select>
+        </div>
+        <div class="request-container">
+            <button id="count-hair-color-btn">Count by hair color</button>
+            <select id="hairColor" name="hairColor" required>
+                <option value="BLACK">Black</option>
+                <option value="BLUE">Blue</option>
+                <option value="ORANGE">Orange</option>
+            </select>
+        </div>
+        <div class="request-container">
+            <button id="count-eye-color-btn">Count by eye color</button>
+            <select id="eyeColor" name="eyeColor" required>
+                <option value="BLACK">Black</option>
+                <option value="BLUE">Blue</option>
+                <option value="ORANGE">Orange</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="button-container">
+        <button id="logout-btn">Logout</button>
+        <button id="admin-panel-btn">Admin panel</button>
+        <button id="request-admin-btn">Request admin</button>
+    </div>
+</div>
+
+<div id="arrows-container">
+    <button id="prev-page">Prev</button>
+    <button id="next-page">Next</button>
+</div>
+
+<dialog id="addPersonDialog">
+    <iframe src="add_person.html" style="width:100%; height:90%; border:none;"></iframe>
+    <button id="closeAddDialog">Close</button>
+</dialog>
+
+<dialog id="editPersonDialog">
+<!--    <iframe src="edit_person.html" style="width:100%; height:90%; border:none;"></iframe>-->
+    <iframe id="editIframe" src="" style="width:100%; height:90%; border:none;"></iframe>
+    <button id="closeEditDialog">Close</button>
+</dialog>
+
+<button id="add-person">Add Person</button>
+
+
+<div id="notification" class="notification"></div>
+
+<script src="api.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

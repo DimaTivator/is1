@@ -1,0 +1,62 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#auth-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+#auth-container h2 {
+    margin-bottom: 20px;
+}
+
+#auth-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+#auth-container label {
+    margin-top: 10px;
+}
+
+#auth-container input {
+    padding: 8px;
+    margin-top: 5px;
+}
+
+#auth-container button {
+    margin-top: 20px;
+    padding: 10px;
+    cursor: pointer;
+    width: auto;
+}
+
+#error-message {
+    color: red;
+    margin-top: 10px;
+}
+
+.notification {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #fff;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.notification.show {
+    opacity: 1;
+}
