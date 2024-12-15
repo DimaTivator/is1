@@ -13,7 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TransactionCoordinator {
     private final MinioService minioService;
-    private final ImportHistoryService importHistoryService;
 
     public <T> TransactionResult<T> executeTransaction(MultipartFile file, TransactionOperation<T> operation) {
         String minioFilename = null;
