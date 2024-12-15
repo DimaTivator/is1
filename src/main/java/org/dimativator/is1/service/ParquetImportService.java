@@ -10,7 +10,6 @@ import org.dimativator.is1.model.User;
 import org.dimativator.is1.repository.PersonRepository;
 import org.dimativator.is1.repository.CoordinatesRepository;
 import org.dimativator.is1.repository.LocationRepository;
-import org.dimativator.is1.services.UserService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,21 +47,19 @@ public class ParquetImportService {
                 Person person;
                 while ((person = reader.read()) != null) {
                     rowCount++;
-                    // Check if coordinates already exist
+
                     Coordinates coordinates = person.getCoordinates();
                     Coordinates existingCoordinates = coordinatesRepository
                         .findByXAndY(coordinates.getX(), coordinates.getY())
                         .orElseGet(() -> coordinatesRepository.save(coordinates));
                     person.setCoordinates(existingCoordinates);
                     
-                    // Check if location already exists
                     Location location = person.getLocation();
                     Location existingLocation = locationRepository
                         .findByXAndYAndZ(location.getX(), location.getY(), location.getZ())
                         .orElseGet(() -> locationRepository.save(location));
                     person.setLocation(existingLocation);
                     
-                    // Set the user for this person
                     person.setUser(user);
                     
                     people.add(person);
@@ -71,9 +68,11 @@ public class ParquetImportService {
 
             personRepository.saveAll(people);
             tempFile.delete();
+
         } catch (Exception e) {
             success = false;
             throw e;
+            
         } finally {
             importHistoryService.recordImport(
                 user.getLogin(),
