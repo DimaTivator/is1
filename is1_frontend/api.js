@@ -332,7 +332,8 @@ async function uploadParquetFile(file) {
         });
         
         if (!response.ok) {
-            throw new Error('Upload failed');
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
         }
         
         return await response.text();

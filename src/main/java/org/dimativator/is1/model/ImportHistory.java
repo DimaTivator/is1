@@ -10,7 +10,7 @@ import java.time.ZonedDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "is1_import_history")
+@Table(name = "is1_import_history_lab2")
 public class ImportHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

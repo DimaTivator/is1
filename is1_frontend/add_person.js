@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     await loadLocations();
 });
 
-const uploadedFile = null;
+let uploadedFile = null;
 
 document.getElementById('parquet-upload').addEventListener('change', (event) => {
     uploadedFile = event.target.files[0];

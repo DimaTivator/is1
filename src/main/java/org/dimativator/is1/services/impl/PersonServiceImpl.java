@@ -172,12 +172,12 @@ public class PersonServiceImpl implements PersonService {
         throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You are not owner of this object");
     }
 
-    private void checkUniqueCombination(PersonDto personDto) {
+    public void checkUniqueCombination(PersonDto personDto) {
         List<Person> persons  = personRepository.findByNameAndBirthdayAndNationality(
             personDto.getName(), personDto.getBirthday(), personDto.getNationality()
         );
 
-        if (persons.size() > 1 && personDto.getId() != null || persons.size() > 0 && personDto.getId() == null) {
+        if (persons.size() > 1 && personDto.getId() != null || !persons.isEmpty() && personDto.getId() == null) {
             throw new ResponseStatusException(
                 HttpStatus.BAD_REQUEST, 
                 "Person with this combination of Name, Birthday and Nationality already exists"
