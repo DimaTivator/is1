@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +21,7 @@ public class ImportHistoryService {
     
     private final ImportHistoryRepository importHistoryRepository;
 
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional(propagation = Propagation.REQUIRES_NEW, isolation=Isolation.READ_UNCOMMITTED)
     public void recordImport(String username, String filename, int rowCount, boolean success) {
         ImportHistory history = new ImportHistory();
         history.setUsername(username);

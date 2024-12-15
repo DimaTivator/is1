@@ -55,4 +55,7 @@ public interface PersonApi {
     @PostMapping("/persons/import-parquet")
     ResponseEntity<String> importParquet(@RequestParam("file") MultipartFile file, 
                                         @RequestHeader(name = "Authorization") String token);
+
+    @DeleteMapping(value = "/persons/all")
+    ResponseEntity<Void> deleteAllPersons(@RequestHeader(name = "Authorization") String token);
 }

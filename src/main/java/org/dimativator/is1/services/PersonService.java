@@ -30,4 +30,6 @@ public interface PersonService {
     void checkUser(long id, User user);
 
     void checkUniqueCombination(PersonDto personDto);
+
+    void deleteAllPersons(User user);
 }

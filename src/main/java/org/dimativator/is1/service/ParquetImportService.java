@@ -14,6 +14,7 @@ import org.dimativator.is1.repository.CoordinatesRepository;
 import org.dimativator.is1.repository.LocationRepository;
 import org.dimativator.is1.services.PersonService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -31,7 +32,10 @@ public class ParquetImportService {
     private final ImportHistoryService importHistoryService;
     private final PersonService personService;
 
-    @Transactional
+    // @Transactional(isolation=Isolation.READ_UNCOMMITTED)
+    // @Transactional(isolation=Isolation.READ_COMMITTED)
+//   @Transactional(isolation=Isolation.REPEATABLE_READ)
+    @Transactional(isolation=Isolation.SERIALIZABLE)
     public void importPeopleFromParquet(MultipartFile file, User user) throws Exception {
         boolean success = true;
         int rowCount = 0;

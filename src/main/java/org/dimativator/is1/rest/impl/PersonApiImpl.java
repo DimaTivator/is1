@@ -86,7 +86,9 @@ public class PersonApiImpl implements PersonApi {
 
     @Override
     public ResponseEntity<PersonDto> createPerson(PersonDto personDto, String token) {
-        User user = userService.getUserByToken(getToken(token));
+        // TODO: uncomment
+        // User user = userService.getUserByToken(getToken(token));
+        User user = userService.getUserByLogin("admin");
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(personService.createPerson(personDto, user));
         } catch (ResponseStatusException e) {
@@ -101,7 +103,9 @@ public class PersonApiImpl implements PersonApi {
 
     @Override
     public ResponseEntity<PersonDto> updatePerson(PersonDto personDto, String token) {
-        final User user = userService.getUserByToken(getToken(token));
+        // TODO: uncomment
+        // User user = userService.getUserByToken(getToken(token));
+        User user = userService.getUserByLogin("admin");
         personDto.setUser(UserMapper.toDto(user));
         personService.checkUser(personDto.getId(), user);
 
@@ -143,8 +147,9 @@ public class PersonApiImpl implements PersonApi {
 
     @Override
     public ResponseEntity<Void> deletePersonById(Long id, String token) {
-        final User user = userService.getUserByToken(getToken(token));
-        personService.checkUser(id, user);
+        // TODO: uncomment
+        // final User user = userService.getUserByToken(getToken(token));
+        // personService.checkUser(id, user);
         personService.deletePersonById(id);
         return ResponseEntity.noContent().build();
     }
@@ -153,13 +158,25 @@ public class PersonApiImpl implements PersonApi {
     public ResponseEntity<String> importParquet(@RequestParam("file") MultipartFile file, 
                                               @RequestHeader(name = "Authorization") String token) {
         try {
-            User user = userService.getUserByToken(getToken(token));
+            // TODO: uncomment
+            // User user = userService.getUserByToken(getToken(token));
+            User user = userService.getUserByLogin("admin");
+
             parquetImportService.importPeopleFromParquet(file, user);
             return ResponseEntity.ok("Import successful");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body("Import failed: " + e.getMessage());
         }
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteAllPersons(String token) {
+        // TODO: uncomment
+        // User user = userService.getUserByToken(getToken(token));
+        User user = userService.getUserByLogin("admin");
+        personService.deleteAllPersons(user);
+        return ResponseEntity.noContent().build();
     }
 
     private String getToken(String bearerToken) {

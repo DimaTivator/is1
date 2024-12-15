@@ -4,6 +4,7 @@ import jakarta.annotation.Nonnull;
 import org.dimativator.is1.model.Color;
 import org.dimativator.is1.model.Country;
 import org.dimativator.is1.model.Person;
+import org.dimativator.is1.model.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -46,4 +47,9 @@ public interface PersonRepository extends JpaRepository<Person, Long> {
     void deleteByHeightAndUser(@Param("height") float height, @Param("user_id") Long userId);
 
     List<Person> findByNameAndBirthdayAndNationality(@NotBlank String name, ZonedDateTime birthday, Country nationality);
+
+    @Transactional
+    @Modifying
+    @Query("delete from Person p where p.user = :user")
+    void deleteByUser(@Param("user") User user);
 }
