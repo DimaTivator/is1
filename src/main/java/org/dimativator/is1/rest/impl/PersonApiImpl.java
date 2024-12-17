@@ -86,7 +86,9 @@ public class PersonApiImpl implements PersonApi {
 
     @Override
     public ResponseEntity<PersonDto> createPerson(PersonDto personDto, String token) {
-        User user = userService.getUserByToken(getToken(token));
+        // TODO: uncomment
+        // final User user = userService.getUserByToken(getToken(token));
+        final User user = userService.getUserByLogin("admin");
         try {
             return ResponseEntity.status(HttpStatus.CREATED).body(personService.createPerson(personDto, user));
         } catch (ResponseStatusException e) {
@@ -101,7 +103,10 @@ public class PersonApiImpl implements PersonApi {
 
     @Override
     public ResponseEntity<PersonDto> updatePerson(PersonDto personDto, String token) {
-        final User user = userService.getUserByToken(getToken(token));
+        // TODO: uncomment
+        // final User user = userService.getUserByToken(getToken(token));
+        final User user = userService.getUserByLogin("admin");
+        
         personDto.setUser(UserMapper.toDto(user));
         personService.checkUser(personDto.getId(), user);
 
@@ -143,7 +148,9 @@ public class PersonApiImpl implements PersonApi {
 
     @Override
     public ResponseEntity<Void> deletePersonById(Long id, String token) {
-        final User user = userService.getUserByToken(getToken(token));
+        // TODO: uncomment
+        // final User user = userService.getUserByToken(getToken(token));
+        final User user = userService.getUserByLogin("admin");
         personService.checkUser(id, user);
         personService.deletePersonById(id);
         return ResponseEntity.noContent().build();
@@ -153,7 +160,9 @@ public class PersonApiImpl implements PersonApi {
     public ResponseEntity<String> importParquet(@RequestParam("file") MultipartFile file, 
                                               @RequestHeader(name = "Authorization") String token) {
         try {
-            User user = userService.getUserByToken(getToken(token));
+            // TODO: uncomment
+            // final User user = userService.getUserByToken(getToken(token));
+            final User user = userService.getUserByLogin("admin");
             parquetImportService.importPeopleFromParquet(file, user);
             return ResponseEntity.ok("Import successful");
 
