@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -76,7 +77,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    @Transactional
+    @Transactional(isolation=Isolation.READ_UNCOMMITTED)
     public PersonDto createPerson(PersonDto personDto, User user) {
         checkUniqueCombination(personDto);
         final Person person = PersonMapper.toEntity(personDto);
@@ -96,7 +97,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    @Transactional
+    @Transactional(isolation=Isolation.READ_COMMITTED)
     public PersonDto updatePerson(PersonDto personDto) {
         checkUniqueCombination(personDto);
         final Person person = PersonMapper.toEntity(personDto);
@@ -158,6 +159,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    @Transactional(isolation=Isolation.READ_UNCOMMITTED)
     public void deletePersonById(Long id) {
         personRepository.deleteById(id);
     }

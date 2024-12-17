@@ -13,6 +13,7 @@ import org.dimativator.is1.services.PersonService;
 import org.dimativator.is1.repository.CoordinatesRepository;
 import org.dimativator.is1.repository.LocationRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
@@ -33,7 +34,7 @@ public class ParquetImportService {
     private final ImportHistoryService importHistoryService;
     private final TransactionCoordinator transactionCoordinator;
 
-    @Transactional
+    @Transactional(isolation=Isolation.SERIALIZABLE)
     public void importPeopleFromParquet(MultipartFile file, User user) throws Exception {
         TransactionOperation<ImportResult> operation = new TransactionOperation<>() {
             private List<Person> people;
